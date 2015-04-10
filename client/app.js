@@ -84,13 +84,22 @@ Template.chat.events({
     }
 });
 
+// Subscribe to the userStatus publication that was declared on the server.
+Meteor.subscribe('userStatus');
+// Trying to Subscribe to the grabMessages that was declared on the server.
+Meteor.subscribe('grabMessages');
+
+Template.online.helpers({
+    usersOnline: function(){
+        // returns a reactive cursor to a collection of online users.
+        return Meteor.users.find({ "status.online": true });
+    }
+});
+
 Template.chat.helpers({
     'messageGrab': function(){
         var currPage = Session.get('currentPage');
-        var currentUserId = Meteor.userId();
-        //return PlayersList.find({}, {sort: {score: -1, name: 1} })
-        return Chat.find({board: currPage}, {sort: {timeCreated: -1}});
-        
+        return Chat.find({board: currPage}, {sort: {timeCreated: -1}});  
     },
     'formatDate': function(date) {
         return moment(date).format('MMMM Do');
@@ -98,25 +107,11 @@ Template.chat.helpers({
     'formatTime': function(date) {
         return moment(date).format('HH:mm:ss');
     },
-    'userGrab': function(){
-        var currPage = Session.get('currentPage');
-        return UsersList.find({board: currPage}, {sort: {timeJoined: -1}});
-    },
     'showUsername': function(){
         return Meteor.user().username
     },
     'currentPageFisk': function(){
         return Session.get('currentPage');
-    }
-});
-
-// Subscribe to the userStatus publication that was declared on the server.
-Meteor.subscribe('userStatus');
-
-Template.online.helpers({
-    usersOnline: function(){
-        // returns a reactive cursor to a collection of online users.
-        return Meteor.users.find({ "status.online": true });
     }
 });
 

@@ -9,6 +9,10 @@ Router.route('/', function () {
 Router.route('/:someValue', {
     onBeforeAction: function () {
         Session.set('currentPage', this.params.someValue);
+    },
+    waitOn: function () {
+        return Meteor.subscribe('grabMessages');
+        //return Meteor.subscribe('grabMessages', this.params.someValue);
     }
 });
 
@@ -84,32 +88,6 @@ Template.chat.events({
     }
 });
 
-Template.chat.helpers({
-    'messageGrab': function(){
-        var currPage = Session.get('currentPage');
-        var currentUserId = Meteor.userId();
-        //return PlayersList.find({}, {sort: {score: -1, name: 1} })
-        return Chat.find({board: currPage}, {sort: {timeCreated: -1}});
-        
-    },
-    'formatDate': function(date) {
-        return moment(date).format('MMMM Do');
-    },
-    'formatTime': function(date) {
-        return moment(date).format('HH:mm:ss');
-    },
-    'userGrab': function(){
-        var currPage = Session.get('currentPage');
-        return UsersList.find({board: currPage}, {sort: {timeJoined: -1}});
-    },
-    'showUsername': function(){
-        return Meteor.user().username
-    },
-    'currentPageFisk': function(){
-        return Session.get('currentPage');
-    }
-});
-
 // Subscribe to the userStatus publication that was declared on the server.
 Meteor.subscribe('userStatus');
 
@@ -117,6 +95,25 @@ Template.online.helpers({
     usersOnline: function(){
         // returns a reactive cursor to a collection of online users.
         return Meteor.users.find({ "status.online": true });
+    }
+});
+
+Template.chat.helpers({
+    'messageGrab': function(){
+        var currPage = Session.get('currentPage');
+        return Chat.find({board: currPage}, {sort: {timeCreated: -1}});  
+    },
+    'formatDate': function(date) {
+        return moment(date).format('MMMM Do');
+    },
+    'formatTime': function(date) {
+        return moment(date).format('HH:mm:ss');
+    },
+    'showUsername': function(){
+        return Meteor.user().username
+    },
+    'currentPageFisk': function(){
+        return Session.get('currentPage');
     }
 });
 

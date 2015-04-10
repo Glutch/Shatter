@@ -2,17 +2,15 @@
 UsersList = new Mongo.Collection('siteUsers');
 Chat = new Mongo.Collection('messages');
     
-Router.route('/', function () {
-  Session.set('currentPage', 'Shatter');
-});
-
-Router.route('/:someValue', {
-    onBeforeAction: function () {
-        Session.set('currentPage', this.params.someValue);
+Router.route('layout', {
+    path: '/:someValue',
+    template: 'layout',
+    waitOn: function () {
+        Session.set('currentPage', this.params.someValue); //THIS ONE DOES WORK
+        return Meteor.subscribe('messages', this.params.someValue);
+        //Session.set('currentPage', this.params.someValue); THIS ONE DOESNT WORK
     }
 });
-
-Session.set('currentPage', 'Shatter');
 
 Template.navigate.events({
     'click .homeBtn': function () {
@@ -47,16 +45,17 @@ Template.navigate.helpers({
 Template.submitMessage.events({
     'submit form': function(event){
         event.preventDefault();
-        var currBoard = Session.get('currentPage');
+        //var currBoard = Session.get('currentPage');
+        var currBoard = Router.current().params.someValue;
         var newMessage = event.target.message.value;
-        var currentUserId = Meteor.user().username;
-        if (currBoard != 'Shatter'){
-            Chat.insert({
-                message: newMessage,
-                createdBy: currentUserId,
-                timeCreated: Session.get('time'),
-                board: currBoard
-            })
+        if (currBoard != 'Shatter') {
+            // insecure package is removed, so you must either use allow/deny rules,
+            // or move your inserts to server methods.
+            var req = {
+                newMessage: newMessage,
+                currBoard: currBoard,
+            }
+            Meteor.call('insertMessage', req);
         };
         event.target.message.value = "";
     }
@@ -64,7 +63,8 @@ Template.submitMessage.events({
 
 Template.submitMessage.helpers({
     'placeholder': function(){
-        var currPage = Session.get('currentPage');
+        //var currPage = Session.get('currentPage');
+        var currPage = Router.current().params.someValue;
         if (currPage == 'Shatter'){
             return "You can't type in /Shatter, please visit another board.";
         } else {
@@ -84,32 +84,6 @@ Template.chat.events({
     }
 });
 
-Template.chat.helpers({
-    'messageGrab': function(){
-        var currPage = Session.get('currentPage');
-        var currentUserId = Meteor.userId();
-        //return PlayersList.find({}, {sort: {score: -1, name: 1} })
-        return Chat.find({board: currPage}, {sort: {timeCreated: -1}});
-        
-    },
-    'formatDate': function(date) {
-        return moment(date).format('MMMM Do');
-    },
-    'formatTime': function(date) {
-        return moment(date).format('HH:mm:ss');
-    },
-    'userGrab': function(){
-        var currPage = Session.get('currentPage');
-        return UsersList.find({board: currPage}, {sort: {timeJoined: -1}});
-    },
-    'showUsername': function(){
-        return Meteor.user().username
-    },
-    'currentPageFisk': function(){
-        return Session.get('currentPage');
-    }
-});
-
 // Subscribe to the userStatus publication that was declared on the server.
 Meteor.subscribe('userStatus');
 
@@ -117,6 +91,29 @@ Template.online.helpers({
     usersOnline: function(){
         // returns a reactive cursor to a collection of online users.
         return Meteor.users.find({ "status.online": true });
+    }
+});
+
+Template.chat.helpers({
+    'messageGrab': function(){
+        //var currPage = Session.get('currentPage');
+        var currPage = Router.current().params.someValue;
+        return Chat.find({board: currPage}, {sort: {timeCreated: -1}});  
+    },
+    'formatDate': function(date) {
+        return moment(date).format('MMMM Do');
+    },
+    'formatTime': function(date) {
+        return moment(date).format('HH:mm:ss');
+    },
+    'showUsername': function(){
+        return Meteor.user().username
+    },
+    'currentPageFisk': function(){
+        return Session.get('currentPage');
+    },
+    getUsername: function (user_id) {
+        return Meteor.users.find({_id: user_id}).username;
     }
 });
 

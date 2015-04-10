@@ -4,6 +4,10 @@
 </head>
 
 <body>
+</body>
+
+<!-- You should use a dedicated template for the parent layout instead of using body -->
+<template name="layout">
     <div class="header {{#if currentUser}}topBar{{/if}}">
         {{#if currentUser}}
             <div class="shatter">{{> loginButtons}}</div>
@@ -17,13 +21,13 @@
     {{#if currentUser}}
         {{> navigate}}
         <div class="content">
-            {{> online}}
             {{> chat}}
             {{> submitMessage}}
+            {{> online}}
         </div>
     {{else}}
     {{/if}}
-</body>
+</template>
 
 <!-- Removed the foo template, consolidated your "show online users" to this template below -->
 <template name="online">
@@ -41,7 +45,7 @@
     {{#if currentUser}}
         <div class="navigate">
             <div class="navigateIns">
-                <div class="homeBtnBox"><div class="right">></div><div class="homeBtn">Home</div></div>
+                <div class="homeBtnBox"><div class="right"></div><div class="homeBtn">Home</div></div>
                 <form class="gotoForm"><input class="gotoInput" type="text" name="gotoBoard" placeholder="{{currentPage}}"></form>
             </div>
         </div>
@@ -68,9 +72,7 @@
         
     {{else}}
         
-    {{/if}}
-    
-    
+    {{/if}}   
 </template>
 
 <template name="submitMessage">

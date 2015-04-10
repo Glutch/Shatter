@@ -1,0 +1,250 @@
+body{
+    margin: 0px;
+    background: #EEE;
+    font-family: 'Roboto', sans-serif;
+}
+:focus {
+    outline: 0;
+}
+.shatter{
+    width: 16%;
+    padding: 0px 15px;
+    text-align: right;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    z-index: 10;
+    color: white;
+    font-size: 24px;
+    line-height: 50px;
+    font-weight: 200;
+}
+.header{
+    height: 100%;
+    background: #FFF;
+    line-height: 100px;
+    background-image: url('/images/fantasy_space-wide.jpg');
+    transition: 0.5s;
+    position: fixed;
+    background-position: center;
+    top: 0px;
+    left: 0px;
+    right: 0px;
+    z-index: 3;
+}
+.gotoForm{
+    display: inline-block;
+}
+.gotoInput{
+    line-height: 27px;
+    height: 28px;
+    border: 0px;
+    padding: 7px;
+    border-radius: 3px;
+    background: rgba(255, 255, 255, 0.3);
+    font-size: 16px;
+    transition: 0.1s;
+    width: auto;
+    min-width: 10px;
+    
+}
+.gotoInput:focus{
+    background: white;
+}
+.homeBtnBox{
+    cursor: pointer;
+    width: 16%;
+    padding: 0px 15px;
+    float: left;
+    text-align: right;
+}
+.homeBtn{
+    float: right;
+}
+.right {
+    float: right;
+    margin: 0px 5px 0px 10px;
+    color: #C0C0C0;
+}
+#login-dropdown-list input {
+  margin: 0 0 -1px;
+  border-radius: 0px;
+  position: relative;
+  z-index: 1;
+  border: 0px;
+}
+#login-dropdown-list .dropdown-menu {
+    min-width: 300px;
+    padding: 0px 15px !important;
+    top: 35px !important;
+    margin-left: -150px;
+    left: 50%;
+    border: 0px;
+    background: none;
+    box-shadow: 0px 0px 0px!important;
+    -webkit-box-shadow: 0px 0px 0px!important;
+    line-height: 20px;
+}
+#login-dropdown-list .btn {
+    margin-top: 5px;
+    border: 0px;
+}
+.dropup, .dropdown {
+    position: relative;
+    display: block;
+}
+.caret{
+    display: none;
+}
+.messageBox{
+    position: fixed;
+    bottom: 0px;
+    height: 60px;
+    background: rgba(255, 255, 255, 0.95);
+    outline: none;
+    left: 0px;
+    right: 0px;
+    border-top: 1px solid #C0C0C0;
+}
+img{
+    max-width: 80%;
+    max-height: 600px;
+}
+.navigate{
+    height: 50px;
+    background: rgba(226, 222, 222, 0.95);
+    color: #808080;
+    font-size: 16px;
+    position: fixed;
+    top: 50px;
+    left: 0px;
+    right: 0px;
+}
+.chatBox{
+    width: 80%;
+    float: left;
+}
+.userBox{
+    width: 20%;
+    float: left;
+}
+.navigateIns{
+    line-height: 51px;
+    padding: 0px 22px;
+}
+.topBar{
+    height: 50px;
+    background: white;
+    background-image: url('/images/fantasy_space-wide.jpg');
+    background-size: 100%;
+    background-position: center;
+    line-height: 20px;
+}
+.messageTime{
+    display: none;
+}
+.messageTimeShown{
+    display: inline;
+}
+.creator{
+    color: silver;
+    font-weight: 300;
+    width: 20%;
+    text-align: right;
+    padding: 5px 15px;
+    float: left;
+    position: relative;
+}
+.actualMessage{
+    color: #333;
+    font-weight: 300;
+    padding: 5px 15px;
+    float: left;
+    width: 80%;
+}
+.messageInput{
+    font-family: inherit;
+    font-size: inherit;
+    line-height: inherit;
+    height: 60px;
+    border: 0px;
+    width: 100%;
+    background: none;
+    padding: 10px 15px;
+}
+.headerIns{
+    margin: auto;
+    height: 100px;
+    padding: 30px;
+}
+.plsSignIn{
+    text-align: center;
+    font-size: 50px;
+    color: #333;
+    font-weight: 200;
+    line-height: 300px;
+    height: 300px;
+}
+.logo{
+    font-size: 65px;
+    color: #FFF;
+    font-family: Roboto;
+    font-weight: 100;
+    text-align: center;
+    width: 100%;
+    height: 100px;
+}
+.loginButtonsBox{
+    position: absolute;
+    left: 0px;
+    top: 0px;
+    width: 20%;
+    text-align: right;
+    line-height: 50px;
+    font-family: Roboto;
+    font-weight: 200;
+}
+.loginBox{
+    padding: 18px 22px;
+    color: #FFF;
+    border-radius: 3px;
+    border: 2px solid #FFF;
+    line-height: 10px;
+    position: absolute;
+    top: 110px;
+    left: 50%;
+    width: 150px;
+    margin-left: -75px;
+}
+.floating{
+    position: fixed;
+    width: 400px;
+    left: 50%;
+    margin-left: -200px;
+    display: table;
+    height: 200px;
+    top: 30%;
+    text-align: center;
+}
+.dropdown-toggle{
+    color: white !important;
+}
+.content{
+    width: 100%;
+    margin-bottom: 70px;
+    display: table;
+    margin-top: 110px;
+}
+.selected{
+    background: white;
+}
+.player{
+    display: table;
+    padding: 5px 10px;
+    margin: 5px 0px;
+    border-radius: 3px;
+    border: 1px solid silver;
+}
+.message{
+    font-size: 20px;
+}

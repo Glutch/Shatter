@@ -1,0 +1,86 @@
+<head>
+    <title>Shatter</title>
+    <link href='http://fonts.googleapis.com/css?family=Roboto:500,900italic,900,400italic,100,700italic,300,700,500italic,100italic,300italic,400' rel='stylesheet' type='text/css'>
+</head>
+
+<body>
+    {{> online}}
+    <div class="header {{#if currentUser}}topBar{{/if}}">
+        {{#if currentUser}}
+        
+                <div class="shatter">{{> loginButtons}}</div>
+        {{else}}
+            <div class="floating">
+                <div class="logo">Shatter</div>
+                <div class="loginBox">{{> loginButtons}}</div>
+            </div>
+        {{/if}}
+    </div>
+    {{#if currentUser}}
+        {{> navigate}}
+        <div class="content">
+                {{> chat}}
+                {{> submitMessage}}
+                {{> foo}}
+        </div>
+    {{else}}
+    {{/if}}
+</body>
+
+<template name="foo">
+        <div class="userBox">
+            Userlist
+            {{#each usersOnline}}
+                <div>{{username}}{{userId}}{{usersOnline}} yo</div>
+            {{/each}}
+        </div>
+</template>
+
+<template name="online">
+  {{isOnline}}
+</template>
+
+<template name="navigate">
+    {{#if currentUser}}
+        <div class="navigate">
+            <div class="navigateIns">
+                <div class="homeBtnBox"><div class="right">></div><div class="homeBtn">Home</div></div>
+                <form class="gotoForm"><input class="gotoInput" type="text" name="gotoBoard" placeholder="{{currentPage}}"></form>
+            </div>
+        </div>
+    {{/if}}
+</template>
+
+<template name="chat">
+    {{isOnline}}
+    {{#if currentUser}}
+        <div class="chatBox">
+            {{#each messageGrab}}
+                <div class="message">
+                    <div class="creator">
+                        <span class="messageTime">
+                            <span style="color: #CFCFCF; font-size: 15px;">{{formatDate timeCreated}}</span> 
+                            {{formatTime timeCreated}}
+                        </span>
+                        <span class="createdBy">{{createdBy}}</span>
+                    </div>
+                    <div class="actualMessage">{{message}}</div>
+                </div>
+            {{/each}}
+        </div>
+        
+    {{else}}
+        
+    {{/if}}
+    
+    
+</template>
+
+<template name="submitMessage">
+    {{#if currentUser}}
+        <form class="messageBox">
+            <input class="messageInput" type="text" name="message" placeholder="{{placeholder}}" autocomplete="off">
+            <input type="submit" value="Submit" autocomplete="off">
+        </form>
+    {{/if}}
+</template>

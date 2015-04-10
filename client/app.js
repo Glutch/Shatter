@@ -2,19 +2,15 @@
 UsersList = new Mongo.Collection('siteUsers');
 Chat = new Mongo.Collection('messages');
     
-Router.route('/', function () {
-  Session.set('currentPage', 'Shatter');
-});
-
 Router.route('layout', {
     path: '/:someValue',
     template: 'layout',
     waitOn: function () {
+        Session.set('currentPage', this.params.someValue); //THIS ONE DOES WORK
         return Meteor.subscribe('messages', this.params.someValue);
+        //Session.set('currentPage', this.params.someValue); THIS ONE DOESNT WORK
     }
 });
-
-Session.set('currentPage', 'Shatter');
 
 Template.navigate.events({
     'click .homeBtn': function () {

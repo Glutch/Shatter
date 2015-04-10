@@ -4,11 +4,9 @@
 </head>
 
 <body>
-    {{> online}}
     <div class="header {{#if currentUser}}topBar{{/if}}">
         {{#if currentUser}}
-        
-                <div class="shatter">{{> loginButtons}}</div>
+            <div class="shatter">{{> loginButtons}}</div>
         {{else}}
             <div class="floating">
                 <div class="logo">Shatter</div>
@@ -19,25 +17,24 @@
     {{#if currentUser}}
         {{> navigate}}
         <div class="content">
-                {{> chat}}
-                {{> submitMessage}}
-                {{> foo}}
+            {{> online}}
+            {{> chat}}
+            {{> submitMessage}}
         </div>
     {{else}}
     {{/if}}
 </body>
 
-<template name="foo">
-        <div class="userBox">
-            Userlist
-            {{#each usersOnline}}
-                <div>{{username}}{{userId}}{{usersOnline}} yo</div>
-            {{/each}}
-        </div>
-</template>
-
+<!-- Removed the foo template, consolidated your "show online users" to this template below -->
 <template name="online">
-  {{isOnline}}
+    <div class="userBox">
+        <h4>Userlist</h4>
+        {{#each usersOnline}}
+            <div>
+                {{username}}
+            </div>
+        {{/each}}
+    </div>
 </template>
 
 <template name="navigate">

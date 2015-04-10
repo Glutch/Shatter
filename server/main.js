@@ -8,8 +8,8 @@ Meteor.publish('userStatus', function() {
 });
 
 Meteor.publish('grabMessages', function() {
-    var currPage = Session.get('currentPage');
-    return Chat.find({board: currPage}, {sort: {timeCreated: -1}});
+    //var currPage = Session.get('currentPage');
+    return Chat.find({board: Home}, {sort: {timeCreated: -1}});
 });
 
 Meteor.methods({

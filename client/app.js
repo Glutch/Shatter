@@ -9,6 +9,10 @@ Router.route('/', function () {
 Router.route('/:someValue', {
     onBeforeAction: function () {
         Session.set('currentPage', this.params.someValue);
+    },
+    waitOn: function () {
+        return Meteor.subscribe('grabMessages');
+        //return Meteor.subscribe('grabMessages', this.params.someValue);
     }
 });
 
@@ -86,8 +90,6 @@ Template.chat.events({
 
 // Subscribe to the userStatus publication that was declared on the server.
 Meteor.subscribe('userStatus');
-// Trying to Subscribe to the grabMessages that was declared on the server.
-Meteor.subscribe('grabMessages');
 
 Template.online.helpers({
     usersOnline: function(){

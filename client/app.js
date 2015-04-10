@@ -6,9 +6,8 @@ Router.route('layout', {
     path: '/:someValue',
     template: 'layout',
     waitOn: function () {
-        Session.set('currentPage', this.params.someValue); //THIS ONE DOES WORK
+        Session.set('currentPage', this.params.someValue);
         return Meteor.subscribe('messages', this.params.someValue);
-        //Session.set('currentPage', this.params.someValue); THIS ONE DOESNT WORK
     }
 });
 

@@ -6,13 +6,11 @@ Router.route('/', function () {
   Session.set('currentPage', 'Shatter');
 });
 
-Router.route('/:someValue', {
-    onBeforeAction: function () {
-        Session.set('currentPage', this.params.someValue);
-    },
+Router.route('layout', {
+    path: '/:someValue',
+    template: 'layout',
     waitOn: function () {
-        return Meteor.subscribe('grabMessages');
-        //return Meteor.subscribe('grabMessages', this.params.someValue);
+        return Meteor.subscribe('messages', this.params.someValue);
     }
 });
 
@@ -51,16 +49,17 @@ Template.navigate.helpers({
 Template.submitMessage.events({
     'submit form': function(event){
         event.preventDefault();
-        var currBoard = Session.get('currentPage');
+        //var currBoard = Session.get('currentPage');
+        var currBoard = Router.current().params.someValue;
         var newMessage = event.target.message.value;
-        var currentUserId = Meteor.user().username;
-        if (currBoard != 'Shatter'){
-            Chat.insert({
-                message: newMessage,
-                createdBy: currentUserId,
-                timeCreated: Session.get('time'),
-                board: currBoard
-            })
+        if (currBoard != 'Shatter') {
+            // insecure package is removed, so you must either use allow/deny rules,
+            // or move your inserts to server methods.
+            var req = {
+                newMessage: newMessage,
+                currBoard: currBoard,
+            }
+            Meteor.call('insertMessage', req);
         };
         event.target.message.value = "";
     }
@@ -68,7 +67,8 @@ Template.submitMessage.events({
 
 Template.submitMessage.helpers({
     'placeholder': function(){
-        var currPage = Session.get('currentPage');
+        //var currPage = Session.get('currentPage');
+        var currPage = Router.current().params.someValue;
         if (currPage == 'Shatter'){
             return "You can't type in /Shatter, please visit another board.";
         } else {
@@ -100,7 +100,8 @@ Template.online.helpers({
 
 Template.chat.helpers({
     'messageGrab': function(){
-        var currPage = Session.get('currentPage');
+        //var currPage = Session.get('currentPage');
+        var currPage = Router.current().params.someValue;
         return Chat.find({board: currPage}, {sort: {timeCreated: -1}});  
     },
     'formatDate': function(date) {
@@ -114,6 +115,9 @@ Template.chat.helpers({
     },
     'currentPageFisk': function(){
         return Session.get('currentPage');
+    },
+    getUsername: function (user_id) {
+        return Meteor.users.find({_id: user_id}).username;
     }
 });
 
